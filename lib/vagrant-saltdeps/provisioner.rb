@@ -3,7 +3,7 @@ require "vagrant"
 require 'pry'
 
 module VagrantPlugins
-  module SaltDeps
+  module Saltdeps
     class Provisioner < Vagrant.plugin('2', :provisioner)
 
       def configure(root_config)
@@ -14,9 +14,6 @@ module VagrantPlugins
         binding.pry
       end
 
-      def cleanup
-        binding.pry
-      end
     end
   end
 end

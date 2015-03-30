@@ -1,6 +1,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'vagrant-saltdeps/version'
+require 'vagrant-Saltdeps/version'
 
 Gem::Specification.new do |s|
   s.name          = "vagrant-saltdeps"
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.license       = "MIT"
   s.authors       = "Joseph Hughes"
   s.email         = "jhughes@itriagehealth.com"
-  s.homepage      = "https://github.com/joshughes/vagrant-saltdeps"
+  s.homepage      = "https://github.com/joshughes/vagrant-Saltdeps"
   s.summary       = "Enables Vagrant to manage salt formula dependencies."
   s.description   = "Enables Vagrant to manage salt formula dependencies."
 

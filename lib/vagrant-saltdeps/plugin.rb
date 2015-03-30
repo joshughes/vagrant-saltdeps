@@ -11,7 +11,7 @@ if Vagrant::VERSION < "1.2.0"
 end
 
 module VagrantPlugins
-  module SaltDeps
+  module Saltdeps
     class Plugin < Vagrant.plugin("2")
       name "saltdeps"
       description <<-DESC

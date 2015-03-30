@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/mitchellh/vagrant.git
-  revision: 8b8f2b26a6e736e4d77c49c7686c9f0a1a0c2eb2
+  revision: f5ee8b8b7d25883e2715de630e03dcb550da3958
   specs:
     vagrant (1.7.2)
       bundler (>= 1.5.2, < 1.8.0)

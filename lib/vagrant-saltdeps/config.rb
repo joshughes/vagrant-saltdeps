@@ -1,7 +1,7 @@
 module VagrantPlugins
-  module SaltDeps
+  module Saltdeps
     class Config < Vagrant.plugin('2', :config)
-      attr_accessor: foo
+      attr_accessor :foo
 
       def initialize
         super
