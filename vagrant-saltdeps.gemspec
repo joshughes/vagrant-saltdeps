@@ -1,6 +1,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'vagrant-Saltdeps/version'
+require 'vagrant-saltdeps/version'
 
 Gem::Specification.new do |s|
   s.name          = "vagrant-saltdeps"
@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_runtime_dependency "git", "~> 1.2"
-  s.add_runtime_dependency "pry", '~> 0.10'
   s.add_runtime_dependency "activesupport", '4.1.10'
 
   s.add_development_dependency "rake", '~> 10.4'

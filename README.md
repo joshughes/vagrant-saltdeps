@@ -93,3 +93,19 @@ This project exposes a few configuration options so you can decide the best way 
 * **merge_pillars** - Tells saltdeps if it should merge your dependent pillars into one file. Defaults to `true`.
 * **merge_grains** - Tells saltdeps if it should merge your dependent grains into one file. Defaults to `true`. 
 * **merge_path** - Path where saltdeps should put the results of the merged pillars and grains files. Defaults to `.vagrant-salt/compiled_grains` and `.vagrant-salt/compiled_pillars`.
+
+
+## Development
+
+To work on the `vagrant-saltdeps` plugin, fork this repository out, and use
+[Bundler](http://gembundler.com) to get the dependencies: **Note:** vagrant requires `bundler < 1.8`. So you will need to install `1.7.13` and use the syntax below to make sure you are running with that version.
+
+```
+$  bundle _1.7.13_
+```
+
+Currently there are not unit tests, but to test you can go to a directory with a Vagrantfile and run the following. 
+
+```
+$  bundle _1.7.13_ exec vagrant provision
+```

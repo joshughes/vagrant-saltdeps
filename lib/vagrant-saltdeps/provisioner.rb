@@ -2,6 +2,7 @@ require 'log4r'
 require 'vagrant'
 require 'git'
 require 'pry'
+require 'fileutils'
 require "log4r"
 
 
@@ -63,6 +64,20 @@ module VagrantPlugins
         end
       end
 
+      def cleanup
+        if File.directory? @checkout_path
+          FileUtils.rm_rf(@checkout_path)
+        end
+        if File.directory? @merged_path
+          FileUtils.rm(@merged_path + '/compiled_grains') if File.exists? @merged_path + '/compiled_grains'
+          FileUtils.rm(@merged_path + '/compiled_pillars') if File.exists? @merged_path + '/compiled_pillars'
+        end
+        cleanup_check_path = self.clean_up_path
+        @deps.keys.each do |dep|
+          FileUtils.rm_rf(cleanup_check_path + dep) if File.directory?(cleanup_check_path + dep)
+        end
+      end
+
       def merge_grains
         output_path = File.expand_path(@merged_path+'/compiled_grains', @machine.env.root_path)
         merge(@grains_path, output_path) if @merge_grains
@@ -93,6 +108,12 @@ module VagrantPlugins
         end
 
         File.open(output,  'w') {|f| f.write merge_object.to_yaml }
+      end
+
+      def clean_up_path
+        checkout_path = @checkout_path.split('/')
+        base_checkout_path = checkout_path[0..(checkout_path.length-2)].join('/')
+        File.expand_path(base_checkout_path + '/', @machine.env.root_path)
       end
 
     end
