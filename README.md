@@ -1,7 +1,7 @@
 # vagrant-saltdeps
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joshughes/vagrant-saltdeps?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-When testing salt formula with vagrant you may have one or many dependent formulas that are required to fully test your new formula. Vagrantsaltdeps is meant to help you manage these dependencies by checking them out from git and making them avaliable to your vagrant machine.
+When testing salt formula with vagrant you may have one or many dependent formulas that are required to fully test your new formula. Vagrantsaltdeps is meant to help you manage these dependencies by checking them out from git and making them available to your vagrant machine.
 
 **NOTE:** This plugin requires Vagrant 1.2+,
 
@@ -87,7 +87,7 @@ With the example above a new folder will be created in `.vagrant-salt/deps` call
 This project exposes a few configuration options so you can decide the best way to lay out your salt-formula and still be able to test it in vagrant.
 
 * **checkout_path** - Where you want saltdeps to checkout your dependent formulas. Defaults to `.saltdeps`
-* **deps_path** - The path to yor saltdeps.yml file. Defaults to `.vagrant-salt/saltdeps.yml'
+* **deps_path** - The path to your saltdeps.yml file. Defaults to `.vagrant-salt/saltdeps.yml'
 * **grains_path** - The path in **all** your repos where the grains file can be found. Defaults to `.vagrant-salt/grains`
 * **pillars_path** - The path in **all** your repos where the pillars file can be found. Defaults to `.vagrant-salt/pillars`
 * **merge_pillars** - Tells saltdeps if it should merge your dependent pillars into one file. Defaults to `true`.
