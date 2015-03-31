@@ -1,7 +1,6 @@
 require 'log4r'
 require 'vagrant'
 require 'git'
-require 'pry'
 require 'fileutils'
 require "log4r"
 
