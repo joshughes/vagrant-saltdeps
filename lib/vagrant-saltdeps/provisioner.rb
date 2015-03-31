@@ -3,6 +3,7 @@ require 'vagrant'
 require 'git'
 require 'fileutils'
 require "log4r"
+require 'pry'
 
 
 module VagrantPlugins
@@ -10,14 +11,15 @@ module VagrantPlugins
     class Provisioner < Vagrant.plugin('2', :provisioner)
       def initialize(machine, config)
         super
-        @logger        = Log4r::Logger.new("vagrant::provisioner::saltdeps")
-        @checkout_path = config.checkout_path
-        @grains_path   = config.grains_path
-        @pillars_path  = config.pillars_path
-        @merge_pillars = config.merge_pillars
-        @merge_grains  = config.merge_grains
-        @merged_path   = config.merged_path
-        @deps          = YAML.load_file(config.deps_path)
+        @logger          = Log4r::Logger.new("vagrant::provisioner::saltdeps")
+        @checkout_path   = config.checkout_path
+        @grains_path     = config.grains_path
+        @pillars_path    = config.pillars_path
+        @merge_pillars   = config.merge_pillars
+        @merge_grains    = config.merge_grains
+        @merged_path     = config.merged_path
+        @deps            = YAML.load_file(config.deps_path)['deps'] || {}
+        @current_formula = YAML.load_file(config.deps_path)['name']
         @formula_folders = []
       end
 
@@ -57,10 +59,12 @@ module VagrantPlugins
       end
 
       def provision
+        communicator = @machine.communicate
         @formula_folders.each do |folder|
-          communicator = @machine.communicate
           communicator.upload(folder[:host_path],folder[:guest_path])
         end
+        current_path = File.expand_path(@current_formula, @machine.env.root_path)
+        communicator.upload(current_path,'/srv/salt')
       end
 
       def cleanup
@@ -72,7 +76,10 @@ module VagrantPlugins
           FileUtils.rm(@merged_path + '/compiled_pillars') if File.exists? @merged_path + '/compiled_pillars'
         end
         cleanup_check_path = self.clean_up_path
-        @deps.keys.each do |dep|
+        cleanup_folders    = @deps.keys
+        cleanup_folders   << @current_formula
+
+        cleanup_folders.each do |dep|
           FileUtils.rm_rf(cleanup_check_path + '/' + dep) if File.directory?(cleanup_check_path + '/' + dep)
         end
       end
@@ -94,7 +101,7 @@ module VagrantPlugins
           merge(@pillars_path, output_path)
           @machine.config.vm.provisioners.each do |provisioner|
             next unless provisioner.type == :salt
-            provisioner.config.pillar(YAML.load_file(output_path))
+            provisioner.config.pillar(YAML.load_file(output_path) || {})
           end
         end
       end
@@ -102,12 +109,12 @@ module VagrantPlugins
       def merge(path, output)
         local_path  = File.expand_path(path,  @machine.env.root_path)
 
-        merge_object = File.exist?(local_path)  ? YAML.load_file(local_path)  : {}
+        merge_object = File.exists?(local_path)  ? YAML.load_file(local_path) || {} : {}
         @formula_folders.each do |folder|
           split_host_path = folder[:host_path].split('/')
           base_dep_path = split_host_path[0..(split_host_path.length-2)].join('/')
           dep_path = File.expand_path(base_dep_path + '/' + path, @machine.env.root_path)
-          merge_object.deep_merge!(YAML.load_file(dep_path)) if File.exist?(dep_path)
+          merge_object.deep_merge!(YAML.load_file(dep_path) || {}) if File.exists?(dep_path)
         end
 
         File.open(output,  'w') {|f| f.write merge_object.to_yaml }

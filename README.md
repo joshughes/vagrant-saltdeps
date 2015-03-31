@@ -27,11 +27,18 @@ $ vagrant plugin install vagrant-saltdeps
 After installing the plugin (instructions above), you must create a saltdeps.yml file somewhere in your repo. This file along with your grains and pillar files must live in the same place across your repos. Here is an example.
 
 ```
-apache:
-  git: git@github.com:saltstack-formulas/apache-formula.git
-  branch: develop
+name: test
+deps:
+  apache:
+    git: git@github.com:saltstack-formulas/apache-formula.git
+    branch: develop
 ```
-
+* **name** - The name of your current formula, and the folder in the same directory as the Vagrantfile where your salt state data exists. This also determines the name of the folder created in `/srv/salt`
+* **deps** - A list of dependencies for your formula
+  * **apache** - In this example we are telling saltdeps that we expect a folder in this repo with our salt states to be called apache. This also determins the folder names that saltdeps creates
+    * **git** - The git repo to checkout from. Currently only git ssh protocol is supported. 
+    * **branch** - The branch of the dependent fromula you would like to check out
+    
 After defining a saltdeps.yml file you must configure your Vagrantfile. You should put the vagrant-saltdeps provisioner before your salt provisioner since it touches the salt provisioner configuration.
 
 ```

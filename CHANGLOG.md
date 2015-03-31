@@ -1,3 +1,10 @@
+## 1.0.2 (2015-03-31)
+
+Bugfixes:
+
+  - update README.md
+  - introduce name to saltdeps.yml to automatically create folder in /srv/salt of current formula
+
 ## 1.0.1 (2015-03-31)
 
 Bugfixes:
