@@ -3,7 +3,6 @@ require 'vagrant'
 require 'git'
 require 'fileutils'
 require "log4r"
-require 'pry'
 
 
 module VagrantPlugins
