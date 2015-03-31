@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors       = "Joseph Hughes"
   s.email         = "jhughes@itriagehealth.com"
   s.homepage      = "https://github.com/joshughes/vagrant-Saltdeps"
-  s.summary       = "Enables Vagrant to manage salt formula dependencies."
+  s.summary       = "Manages vagrant salt dependencies"
   s.description   = "Enables Vagrant to manage salt formula dependencies."
 
   s.files         = `git ls-files`.split($/)
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "git", "~> 1.2"
   s.add_runtime_dependency "pry", '~> 0.10'
+  s.add_runtime_dependency "activesupport", '4.1.10'
 
   s.add_development_dependency "rake", '~> 10.4'
   s.add_development_dependency "rspec", "~> 3.2"
