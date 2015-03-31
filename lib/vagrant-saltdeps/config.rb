@@ -40,7 +40,7 @@ module VagrantPlugins
       end
 
       def finalize!
-        @deps_path     = expand('.vagrant-salt') if @deps_path    == UNSET_VALUE
+        @deps_path     = expand('.vagrant-salt/saltdeps.yml') if @deps_path    == UNSET_VALUE
         @grains_path   = '.vagrant-salt/grains'  if @grains_path  == UNSET_VALUE
         @pillars_path  = '.vagrant-salt/pillars' if @pillars_path == UNSET_VALUE
         @merged_path   = '.vagrant-salt'         if @merged_path  == UNSET_VALUE

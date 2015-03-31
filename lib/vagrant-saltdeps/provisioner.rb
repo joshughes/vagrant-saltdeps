@@ -78,7 +78,6 @@ module VagrantPlugins
         @machine.config.vm.provisioners.each do |provisioner|
           next unless provisioner.type == :salt
           provisioner.config.pillar(YAML.load_file(output_path))
-          binding.pry
         end
       end
 
