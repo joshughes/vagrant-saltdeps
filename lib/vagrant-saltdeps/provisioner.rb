@@ -73,25 +73,29 @@ module VagrantPlugins
         end
         cleanup_check_path = self.clean_up_path
         @deps.keys.each do |dep|
-          FileUtils.rm_rf(cleanup_check_path + dep) if File.directory?(cleanup_check_path + dep)
+          FileUtils.rm_rf(cleanup_check_path + '/' + dep) if File.directory?(cleanup_check_path + '/' + dep)
         end
       end
 
       def merge_grains
         output_path = File.expand_path(@merged_path+'/compiled_grains', @machine.env.root_path)
-        merge(@grains_path, output_path) if @merge_grains
-        @machine.config.vm.provisioners.each do |provisioner|
-          next unless provisioner.type == :salt
-          provisioner.config.grains_config= output_path
+        if @merge_grains
+          merge(@grains_path, output_path)
+          @machine.config.vm.provisioners.each do |provisioner|
+            next unless provisioner.type == :salt
+            provisioner.config.grains_config= output_path
+          end
         end
       end
 
       def merge_pillars
         output_path = File.expand_path(@merged_path+'/compiled_pillars', @machine.env.root_path)
-        merge(@pillars_path, output_path) if @merge_pillars
-        @machine.config.vm.provisioners.each do |provisioner|
-          next unless provisioner.type == :salt
-          provisioner.config.pillar(YAML.load_file(output_path))
+        if @merge_pillars
+          merge(@pillars_path, output_path)
+          @machine.config.vm.provisioners.each do |provisioner|
+            next unless provisioner.type == :salt
+            provisioner.config.pillar(YAML.load_file(output_path))
+          end
         end
       end
 
@@ -112,7 +116,7 @@ module VagrantPlugins
       def clean_up_path
         checkout_path = @checkout_path.split('/')
         base_checkout_path = checkout_path[0..(checkout_path.length-2)].join('/')
-        File.expand_path(base_checkout_path + '/', @machine.env.root_path)
+        File.expand_path(base_checkout_path, @machine.env.root_path)
       end
 
     end
