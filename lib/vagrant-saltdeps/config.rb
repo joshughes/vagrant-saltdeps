@@ -54,7 +54,7 @@ module VagrantPlugins
       def expand(path, errors=[], check=false)
         expanded = Pathname.new(@deps_path).expand_path(@machine.env.root_path)
         if check && !expanded.file?
-          errors << "The file at #{expanded} does not exist. Please give a valid path to your deps.yml file."
+          errors << "The file at #{expanded} does not exist. Please give a valid path to your saltdeps.yml file."
         end
       end
 
