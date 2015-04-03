@@ -40,8 +40,8 @@ module VagrantPlugins
           else
             g = Git.clone(uri, name, path: @checkout_path)
           end
-          g.branch(branch).checkout
-          g.fetch
+          g.checkout(branch)
+          g.pull
         end
       end
 
