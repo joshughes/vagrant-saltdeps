@@ -41,6 +41,7 @@ module VagrantPlugins
             g = Git.clone(uri, name, path: @checkout_path)
           end
           g.checkout(branch)
+          g.pull
         end
       end
 
