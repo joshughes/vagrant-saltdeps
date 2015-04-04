@@ -1,0 +1,15 @@
+en:
+  vagrant:
+    errors:
+      git_checkout_error: |-
+        Saltdeps experienced a git error checking out branch '%{branch}'.
+        Are you sure that branch exists in the repository?
+
+        git returned:
+
+        %{message}
+
+      unknown_error: |-
+        Saldeps experienced an unknown error. The message was:
+
+        %{message}
