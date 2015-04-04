@@ -3,7 +3,7 @@ en:
     errors:
       git_checkout_error: |-
         Saltdeps experienced a git error checking out branch '%{branch}'.
-        Are you sure that branch exists in the repository?
+        Are you sure that branch defined in saltdeps.yml exists in the repository?
 
         git returned:
 
