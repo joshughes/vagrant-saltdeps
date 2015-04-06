@@ -3,7 +3,7 @@ require 'vagrant'
 require 'git'
 require 'fileutils'
 require "log4r"
-
+require_relative 'errors'
 
 module VagrantPlugins
   module Saltdeps
@@ -40,8 +40,12 @@ module VagrantPlugins
           else
             g = Git.clone(uri, name, path: @checkout_path)
           end
-          g.checkout(branch)
-          g.pull
+          begin
+            g.checkout(branch)
+            g.pull
+          rescue  Git::GitExecuteError => e
+            raise GitCheckoutError.new :branch => branch, :message => e.message
+          end
         end
       end
 
