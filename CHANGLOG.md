@@ -1,3 +1,9 @@
+## 1.0.5 (2015-04-13)
+
+BugFixes:
+
+  - change merge order so local pillars and grains overwrite dependent pillars and grains
+
 ## 1.0.4 (2015-04-03)
 
 ErrorHandling:

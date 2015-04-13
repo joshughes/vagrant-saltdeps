@@ -112,7 +112,7 @@ module VagrantPlugins
       def merge(path, output)
         local_path  = File.expand_path(path,  @machine.env.root_path)
 
-        merge_object = File.exists?(local_path)  ? YAML.load_file(local_path) || {} : {}
+        merge_object =  {}
         @formula_folders.each do |folder|
           split_host_path = folder[:host_path].split('/')
           base_dep_path = split_host_path[0..(split_host_path.length-2)].join('/')
@@ -120,6 +120,7 @@ module VagrantPlugins
           merge_object.deep_merge!(YAML.load_file(dep_path) || {}) if File.exists?(dep_path)
         end
 
+        merge_object.deep_merge!(File.exists?(local_path)  ? YAML.load_file(local_path) || {} : {})
         File.open(output,  'w') {|f| f.write merge_object.to_yaml }
       end
 
