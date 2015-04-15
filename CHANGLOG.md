@@ -1,3 +1,8 @@
+## 1.0.6 (2015-04-13)
+
+BugFixes:
+  - change require so that case-sensitive filesystems can load the plugin.
+  
 ## 1.0.5 (2015-04-13)
 
 BugFixes:
