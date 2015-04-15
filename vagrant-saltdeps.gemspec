@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.license       = "MIT"
   s.authors       = "Joseph Hughes"
   s.email         = "jhughes@itriagehealth.com"
-  s.homepage      = "https://github.com/joshughes/vagrant-Saltdeps"
+  s.homepage      = "https://github.com/joshughes/vagrant-saltdeps"
   s.summary       = "Manages vagrant salt dependencies"
   s.description   = "Enables Vagrant to manage salt formula dependencies."
 

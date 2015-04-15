@@ -1,5 +1,5 @@
-require 'vagrant-Saltdeps/plugin'
-require 'vagrant-Saltdeps/version'
+require 'vagrant-saltdeps/plugin'
+require 'vagrant-saltdeps/version'
 
 module VagrantPlugins
   module Saltdeps
