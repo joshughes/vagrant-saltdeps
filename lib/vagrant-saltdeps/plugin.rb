@@ -4,8 +4,6 @@ rescue LoadError
   raise "The Vagrant Saltdeps plugin must be run within Vagrant."
 end
 
-require 'pry'
-
 # This is a sanity check to make sure no one is attempting to install
 # this into an early Vagrant version.
 if Vagrant::VERSION < "1.2.0"
@@ -23,11 +21,6 @@ module VagrantPlugins
       action_hook :basevagrant, :environment_load do |hook|
         require_relative './action.rb'
         hook.prepend(Vagrant::Saltdeps::Action)
-      end
-
-      config(:basevagrant) do
-        require File.expand_path("../config/provisioner", __FILE__)
-        Config::Provisioner
       end
 
       config(:saltdeps, :provisioner) do

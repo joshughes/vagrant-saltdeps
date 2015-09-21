@@ -1,8 +1,13 @@
+## 1.1.0 (2015-09-21)
+
+Base Vagrantfile:
+  - you can now configure a `base_vagratfile` git repo that all of your saltdeps projects can inherit from. This allows you to share common configuration. See README for more details. 
+
 ## 1.0.6 (2015-04-13)
 
 BugFixes:
   - change require so that case-sensitive filesystems can load the plugin.
-  
+
 ## 1.0.5 (2015-04-13)
 
 BugFixes:

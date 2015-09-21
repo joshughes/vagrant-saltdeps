@@ -15,7 +15,7 @@ module VagrantPlugins
           super
           @machine       = nil
           @checkout_path = UNSET_VALUE
-          @deps_path     = UNSET_VALUE
+          @deps_path     = '.vagrant-salt/saltdeps.yml'
           @grains_path   = UNSET_VALUE
           @pillars_path  = UNSET_VALUE
           @merge_pillars = UNSET_VALUE
@@ -34,7 +34,6 @@ module VagrantPlugins
             Pathname.new(@checkout_path).expand_path(machine.env.root_path)
           end
 
-          expand(@deps_path,    errors, true)
           expand(@grains_path,  errors)
           expand(@pillars_path, errors)
 
@@ -43,11 +42,9 @@ module VagrantPlugins
         end
 
         def finalize!
-          @deps_path     = expand('.vagrant-salt/saltdeps.yml') if @deps_path    == UNSET_VALUE
           @grains_path   = '.vagrant-salt/grains'  if @grains_path  == UNSET_VALUE
           @pillars_path  = '.vagrant-salt/pillars' if @pillars_path == UNSET_VALUE
           @merged_path   = '.vagrant-salt'         if @merged_path  == UNSET_VALUE
-          @base_vagrantfile = 'wtf_mate'           if @base_vagrantfile == UNSET_VALUE
 
           @merge_grains  = true if @merge_grains  == UNSET_VALUE
           @merge_pillars = true if @merge_pillars == UNSET_VALUE
@@ -56,7 +53,7 @@ module VagrantPlugins
         private
 
         def expand(path, errors=[], check=false)
-          expanded = Pathname.new(@deps_path).expand_path(@machine.env.root_path)
+          expanded = Pathname.new(path).expand_path(@machine.env.root_path)
           if check && !expanded.file?
             errors << "The file at #{expanded} does not exist. Please give a valid path to your saltdeps.yml file."
           end

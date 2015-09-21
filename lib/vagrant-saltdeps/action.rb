@@ -1,4 +1,4 @@
-require 'pry'
+require 'git'
 module Vagrant
   module Saltdeps
     class Action
@@ -7,13 +7,39 @@ module Vagrant
       end
 
       def call(env)
+         base_vagrantfile = ''
+         checkout_path = ''
          config_loader = env[:env].config_loader
-         config_loader.set(:tmp, '/tmp/Vagrantfile')
-         binding.pry
-         env[:env].instance_variable_set(:@vagrantfile, Vagrantfile.new(config_loader, [:home, :tmp, :root]))
-         binding.pry
-      end
 
+         v = Vagrantfile.new(config_loader, [:home,:root])
+         v.config.vm.provisioners.each do |provisioner|
+           if provisioner.config.class.to_s == 'VagrantPlugins::Saltdeps::Config::Provisioner'
+             base_vagrantfile = provisioner.config.base_vagrantfile
+             checkout_path = provisioner.config.checkout_path
+           end
+         end
+
+         if base_vagrantfile != Vagrant::Plugin::V2::Config.const_get(:UNSET_VALUE)
+           uri    = base_vagrantfile
+           name   = "base-vagrantfile"
+           branch = 'master'
+
+           if File.directory? checkout_path + "/#{name}"
+             g = Git.open checkout_path + "/#{name}"
+           else
+             g = Git.clone(uri, name, path: checkout_path)
+           end
+           begin
+             g.checkout(branch)
+             g.pull
+           rescue  Git::GitExecuteError => e
+             raise GitCheckoutError.new :branch => branch, :message => e.message
+           end
+
+           config_loader.set(:base_vagrantfile, "#{checkout_path}/#{name}/Vagrantfile")
+           env[:env].instance_variable_set(:@vagrantfile, Vagrantfile.new(config_loader, [:home, :base_vagrantfile, :root]))
+         end
+      end
     end
   end
 end
