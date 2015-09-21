@@ -31,8 +31,8 @@ module VagrantPlugins
       end
 
       config(:saltdeps, :provisioner) do
-        require File.expand_path("../config", __FILE__)
-        Config
+        require File.expand_path("../config/provisioner", __FILE__)
+        Config:Provisioner
       end
 
       provisioner(:saltdeps) do
