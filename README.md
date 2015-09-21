@@ -101,7 +101,7 @@ This project exposes a few configuration options so you can decide the best way 
 * **merge_pillars** - Tells saltdeps if it should merge your dependent pillars into one file. Defaults to `true`.
 * **merge_grains** - Tells saltdeps if it should merge your dependent grains into one file. Defaults to `true`.
 * **merge_path** - Path where saltdeps should put the results of the merged pillars and grains files. Defaults to `.vagrant-salt/compiled_grains` and `.vagrant-salt/compiled_pillars`.
-* **base_vagrantfile** - This defines a git repo that has a single `Vagrantfile` in the root of the repository. This Vagrantfile is loaded before the Vagrantfile in the root of the project. The intention here is to allow for common configuration to be shared between salt formula. Any settings in the base Vagrantfile can be overridden with the Vagrantfile in your salt formula repository. The goal is to reduce the number of edits you have to do across the Vagranfiles in your different formulas. 
+* **base_vagrantfile** - This defines a git repo that has a single `Vagrantfile` in the root of the repository. This Vagrantfile is loaded before the Vagrantfile in the root of the project. The intention here is to allow for common configuration to be shared between salt formula. Any settings in the base Vagrantfile can be overridden with the Vagrantfile in your salt formula repository. The goal is to reduce the number of edits you have to do across the Vagrantfiles in your different formulas. 
 
 
 ## Development
