@@ -9,6 +9,7 @@ module Vagrant
       def call(env)
          config_loader = env[:env].config_loader
          config_loader.set(:tmp, '/tmp/Vagrantfile')
+         binding.pry
          env[:env].instance_variable_set(:@vagrantfile, Vagrantfile.new(config_loader, [:home, :tmp, :root]))
          binding.pry
       end

@@ -26,13 +26,13 @@ module VagrantPlugins
       end
 
       config(:basevagrant) do
-        require File.expand_path("../config/base_vagrant", __FILE__)
-        Config:Basevagrant
+        require File.expand_path("../config/provisioner", __FILE__)
+        Config::Provisioner
       end
 
       config(:saltdeps, :provisioner) do
         require File.expand_path("../config/provisioner", __FILE__)
-        Config:Provisioner
+        Config::Provisioner
       end
 
       provisioner(:saltdeps) do
