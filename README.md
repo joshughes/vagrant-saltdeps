@@ -36,9 +36,9 @@ deps:
 * **name** - The name of your current formula, and the folder in the same directory as the Vagrantfile where your salt state data exists. This also determines the name of the folder created in `/srv/salt`
 * **deps** - A list of dependencies for your formula
   * **apache** - In this example we are telling saltdeps that we expect a folder in this repo with our salt states to be called apache. This also determins the folder names that saltdeps creates
-    * **git** - The git repo to checkout from. Currently only git ssh protocol is supported. 
+    * **git** - The git repo to checkout from. Currently only git ssh protocol is supported.
     * **branch** - The branch of the dependent fromula you would like to check out
-    
+
 After defining a saltdeps.yml file you must configure your Vagrantfile. You should put the vagrant-saltdeps provisioner before your salt provisioner since it touches the salt provisioner configuration.
 
 ```
@@ -61,6 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if Vagrant.has_plugin?("vagrant-saltdeps")
     config.vm.provision :saltdeps do |deps|
+      deps.base_vagrantfile = "ssh://git@github.com/jhughes/vagrant-base.git"
       deps.checkout_path =  "./.vagrant-salt/deps"
       deps.deps_path     =  "./.vagrant-salt/saltdeps.yml"
     end
@@ -100,6 +101,7 @@ This project exposes a few configuration options so you can decide the best way 
 * **merge_pillars** - Tells saltdeps if it should merge your dependent pillars into one file. Defaults to `true`.
 * **merge_grains** - Tells saltdeps if it should merge your dependent grains into one file. Defaults to `true`.
 * **merge_path** - Path where saltdeps should put the results of the merged pillars and grains files. Defaults to `.vagrant-salt/compiled_grains` and `.vagrant-salt/compiled_pillars`.
+* **base_vagrantfile** - This defines a git repo that has a single `Vagrantfile` in the root of the repository. This Vagrantfile is loaded before the Vagrantfile in the root of the project. The intention here is to allow for common configuration to be shared between salt formula. Any settings in the base Vagrantfile can be overridden with the Vagrantfile in your salt formula repository. The goal is to reduce the number of edits you have to do across the Vagranfiles in your different formulas. 
 
 
 ## Development

@@ -18,13 +18,17 @@ module VagrantPlugins
       This plugin manages salt formula dependencies.
       DESC
 
+      action_hook :basevagrant, :environment_load do |hook|
+        require_relative './action.rb'
+        hook.prepend(Vagrant::Saltdeps::Action)
+      end
+
       config(:saltdeps, :provisioner) do
-        require File.expand_path("../config", __FILE__)
-        Config
+        require File.expand_path("../config/provisioner", __FILE__)
+        Config::Provisioner
       end
 
       provisioner(:saltdeps) do
-
         # Return the provider
         require File.expand_path("../provisioner", __FILE__)
         Provisioner
