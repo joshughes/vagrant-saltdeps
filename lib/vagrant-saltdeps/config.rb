@@ -9,6 +9,7 @@ module VagrantPlugins
       attr_accessor :merge_grains
       attr_accessor :merged_path
 
+
       def initialize
         super
         @machine       = nil

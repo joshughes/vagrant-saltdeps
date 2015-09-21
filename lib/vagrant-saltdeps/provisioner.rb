@@ -62,6 +62,7 @@ module VagrantPlugins
       end
 
       def provision
+        binding.pry
         communicator = @machine.communicate
         @formula_folders.each do |folder|
           communicator.upload(folder[:host_path],folder[:guest_path])
