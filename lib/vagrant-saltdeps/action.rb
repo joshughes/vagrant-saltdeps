@@ -1,4 +1,5 @@
 require 'git'
+
 module Vagrant
   module Saltdeps
     class Action
@@ -7,8 +8,8 @@ module Vagrant
       end
 
       def call(env)
-         base_vagrantfile = ''
-         checkout_path = ''
+         base_vagrantfile = Vagrant::Plugin::V2::Config.const_get(:UNSET_VALUE)
+         checkout_path = Vagrant::Plugin::V2::Config.const_get(:UNSET_VALUE)
          config_loader = env[:env].config_loader
 
          v = Vagrantfile.new(config_loader, [:home,:root])
@@ -33,7 +34,8 @@ module Vagrant
              g.checkout(branch)
              g.pull
            rescue  Git::GitExecuteError => e
-             raise GitCheckoutError.new :branch => branch, :message => e.message
+             message = " Git error: #{e.message}"
+             raise StandardError.new(message)
            end
 
            config_loader.set(:base_vagrantfile, "#{checkout_path}/#{name}/Vagrantfile")
