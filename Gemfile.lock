@@ -23,7 +23,7 @@ GIT
 PATH
   remote: .
   specs:
-    vagrant-saltdeps (1.1.0)
+    vagrant-saltdeps (1.1.4)
       activesupport (= 4.1.10)
       git (~> 1.2)
 

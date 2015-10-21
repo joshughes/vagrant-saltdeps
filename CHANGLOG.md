@@ -1,4 +1,4 @@
-## 1.1.4 (2015-09-21)
+## 1.1.4 (2015-10-21)
 
 Bugfixes
   - When your not using saltdeps `vagrant up` would fail
