@@ -41,10 +41,11 @@ module VagrantPlugins
             g = Git.clone(uri, name, path: @checkout_path)
           end
           begin
+            g.fetch
             g.checkout(branch)
             g.pull
           rescue  Git::GitExecuteError => e
-            raise GitCheckoutError.new :branch => branch, :message => e.message
+            raise Errors::GitCheckoutError.new :branch => branch, :message => e.message
           end
         end
       end
